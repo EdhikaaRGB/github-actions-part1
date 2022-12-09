@@ -2,6 +2,7 @@
 # We can run multiple lines in a single Step.
 # but more logical is to run multiple steps instead of multi-line code
 # Here we are also running in differen OS (Linux and Ubuntu)
+# Job will Run in parallel 
 
 name: Multi Step and Multi OS GitHub Action
 
