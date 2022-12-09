@@ -1,31 +1,38 @@
-# Publish GitHub workflow artifacts tutorial example
-name: Publish GitHub Actions Artifacts Example
+# This is a basic github workflow to get started
+
+name: Getting started
+
+# controls when the action will be trigger. Workflow triggeres on push or pull request events
+# as mentiond below workflow will triggere only in the main branch
 
 on:
   push:
-    branches: [main]
+    branches: [test-2]
+  pull_request:
+    branches: [test-2]
+
+# a workflow is made with one or more than one jobs that can be run sequentially or in parallel
 
 jobs:
-       
-  archive-build-artifacts:
+  # This workflow contains a single job called build
+  build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    steps:
 
-      - name: Step 1 - Create a temporary artifact downloads folder
-        run: mkdir downloads
-        
-      - name: step 2 - Add artifacts to publish to the temp folder
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+
+    steps:
+      # checks-out the current repository under $GITHUB_WORKSPACE, so our job can access this repo codes
+      - uses: actions/checkout@v2
+
+      # Runs a single line command using runner shell
+      - name: Run a shell script
+        run: sh ./commands.sh
+
+      # Run a set of commands using the runner shell
+      - name: Run a multi-line script
         run: |
-          cd downloads
-          echo 'alpha'    > alpha.html
-          echo 'bravo'    > bravo.html
-          echo 'charlie'  > charlie.html
-          echo 'Visualpath' > visualpath.txt
-          cd ..
-    
-      - name: Step 3 - Use the Upload Artifact GitHub Action
-        # the ubuntu-latest runner will be gone once the run is complated
-        uses: actions/upload-artifact@v2
-        with: 
-          name: assets-for-download
-          path: downloads
+          # To see how many files are there
+          ls -la
+
